@@ -1,1 +1,6 @@
 # Estudio-de-IA-PokeApi
+La arquitectura sigue el patrón MVVM con una estructura simple separando data (api, model, repository) y ui (screens y viewmodels). El estado de la UI se gestiona mediante una sealed class UiState que permite manejar de forma clara los estados Loading, Success, Error y Empty, evitando crashes y mejorando la claridad del flujo.
+
+El listado de Pokémon consume el endpoint GET /pokemon?limit=30&offset=X, mostrando imagen, nombre e ID. Se ha implementado paginación manual mediante botón “Cargar siguientes 30”, utilizando los parámetros limit y offset, con un máximo de 3 páginas (90 Pokémon), tal como se requiere. La pantalla de detalle consume GET /pokemon/{name} y muestra nombre, ID, sprite, tipos, altura y peso, con control de errores mediante try/catch en el Repository.
+
+Como decisiones técnicas, se optó por MVVM sin sobrearquitectura ni librerías adicionales de inyección de dependencias, paginación manual en lugar de 3 para mayor control y claridad en el ejercicio, y manejo explícito de estados para garantizar estabilidad. Entre las limitaciones actuales se encuentran la ausencia de caché local, la falta de tests automatizados y la no gestión avanzada de conectividad.

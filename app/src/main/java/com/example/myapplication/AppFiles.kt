@@ -189,8 +189,8 @@ sealed class UiState<out T> {
 class PokemonListViewModel(
     private val repository: PokemonRepository = PokemonRepository()
 ) : ViewModel() {
-    private  val PAGE_SIZE = 30
-    private  val MAX_PAGES = 3
+    private  val PAGE_SIZE = 15
+    private  val MAX_PAGES = 10
     private var currentPage = 0
 
 
@@ -252,11 +252,16 @@ class PokemonListViewModel(
                     currentPage++
                 }
 
+                result.onFailure {
+                    _uiState.value = UiState.Error("Sin conexión. Pulsa reintentar.")
+                }
+
             } finally {
                 isLoadingMore = false
             }
         }
     }
+
 
 
 }
@@ -464,7 +469,7 @@ private fun PokemonListContent(
                     .fillMaxWidth()
                     .padding(16.dp)
             ) {
-                Text("Cargar siguientes 30")
+                Text("Cargar siguientes")
             }
 
             Spacer(modifier = Modifier.height(56.dp))
